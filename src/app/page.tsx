@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>하하하하</h1>
+      <h1>화장실 지도 프로젝트</h1>
       <div ref={mapRef} style={{ width: '100%', height: '400px' }} />
     </div>
   );
