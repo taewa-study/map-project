@@ -1,8 +1,15 @@
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { fetchCompaniesCover } from "./sub";
 
+export const prefetchData = async ({
+  queryClient,
+}: {
+  queryClient: QueryClient;
+}) => {
+  await queryClient.prefetchQuery({
+    queryKey: ["initData"],
+    queryFn: () => fetchCompaniesCover(),
+  });
 
-export const prefetchCoverQuery = ({ queryClient, companyId }: { queryClient: QueryClient; companyId: string }) => {
-	return queryClient.prefetchQuery({
-		queryKey: companiesKeys.cover(companyId),
-		queryFn: () => fetchCompaniesCover(companyId),
-	});
+  return dehydrate(queryClient);
 };
