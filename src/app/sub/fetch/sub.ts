@@ -16,7 +16,6 @@ const fetchGet = async (url: string) => {
   return axios
     .get(url, {
       headers: supabaseHeaders,
-      withCredentials: true,
       timeout: 5000,
     })
     .then((res) => res.data)
@@ -33,5 +32,17 @@ export const fetchCompaniesCover = async () => {
   } catch (error) {
     console.error("fetchCompaniesCover 에러:", error);
     return {};
+  }
+};
+
+export const fetchPost = async (body: { id: number; title: string }) => {
+  try {
+    const res = await axios.post(`${supabaseUrl}/rest/v1/todos`, body, {
+      headers: supabaseHeaders,
+    });
+    return res.data;
+  } catch (error) {
+    console.error("fetchPost 에러:", error);
+    throw error;
   }
 };
