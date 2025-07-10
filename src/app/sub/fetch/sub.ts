@@ -1,16 +1,21 @@
 import axios, { AxiosError } from "axios";
 
-// 테스트용 헤더 옵션
-const headerOptions = {
+// Supabase REST API 설정
+const supabaseUrl = "https://apgktfixddjccdwvefnm.supabase.co";
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+
+// Supabase REST API 헤더 옵션
+const supabaseHeaders = {
   "Content-Type": "application/json",
+  apikey: supabaseKey,
+  Authorization: `Bearer ${supabaseKey}`,
 };
 
-
-
 const fetchGet = async (url: string) => {
+  console.log("supabaseKey", supabaseKey);
   return axios
     .get(url, {
-      headers: headerOptions,
+      headers: supabaseHeaders,
       withCredentials: true,
       timeout: 5000,
     })
@@ -21,11 +26,12 @@ const fetchGet = async (url: string) => {
 export default fetchGet;
 
 export const fetchCompaniesCover = async () => {
-  // 테스트용 API URL로 변경
-  const res = await fetchGet(
-    `https://jsonplaceholder.typicode.com/posts`
-  );
-  return res || {};
+  try {
+    const res = await fetchGet(`${supabaseUrl}/rest/v1/todos`);
+    console.log(res);
+    return res || {};
+  } catch (error) {
+    console.error("fetchCompaniesCover 에러:", error);
+    return {};
+  }
 };
-
-
